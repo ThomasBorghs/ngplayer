@@ -1,0 +1,10 @@
+<md-nav-list>
+  <a routerLink="/albums/{{album.uri}}" md-list-item *ngFor="let album of albums">
+      <img md-list-avatar src="..." alt="...">
+      <h3 md-line >{{album.name}}</h3>
+      <p md-line>
+        <span> {{album.type}} </span>
+        <span class="demo-2"> -- {{album.uri}} </span>
+      </p>
+  </a>
+</md-nav-list>

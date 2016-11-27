@@ -1,14 +1,8 @@
 <h1>
-  {{title}}
+  <nav>
+    <a routerLink="/albums" routerLinkActive="active" md-raised-button>albums</a>
+    <a routerLink="/artists" routerLinkActive="active" md-raised-button>artists</a>
+  </nav>
 
-  <md-tab-group>
-    <md-tab label="One">
-      <h1>Some tab content</h1>
-      <p>...</p>
-    </md-tab>
-    <md-tab label="Two">
-      <h1>Some more tab content</h1>
-      <p>...</p>
-    </md-tab>
-  </md-tab-group>
+  <router-outlet></router-outlet>
 </h1>
