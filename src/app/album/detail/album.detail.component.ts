@@ -5,7 +5,8 @@ import {Observable} from "rxjs/Rx";
 
 import 'rxjs/add/operator/switchMap';
 
-const BROWSE_LOCAL_LIBRARY_METHOD = 'core.library.browse'
+const LIBRARY_BROWSE_METHOD = 'core.library.browse';
+const LIBRARY_LOOKUP_METHOD = 'core.library.lookup';
 
 @Component({
   selector: 'ngp-album',
@@ -21,12 +22,13 @@ export class AlbumDetailComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params
-      .switchMap((params: Params) => this.retrieveAlbumDetails(params['uri']))
+      .switchMap((params:Params) => this.jsonRpcService.getData(LIBRARY_BROWSE_METHOD, {'uri': params['uri']}))
       .map((data:any) => data.result)
-      .subscribe((albumTracks: any[]) => this.albumTracks = albumTracks);
-  }
+      .map((trackReferences:any[]) => trackReferences.map((reference) => reference.uri))
+      .switchMap((uris:any[]) => this.jsonRpcService.getData(LIBRARY_LOOKUP_METHOD, {'uris': uris}))
+      .map((data:any) => Object.keys(data.result).map((key) => data.result[key][0]))
+      .do((x) => console.log(x))
+      .subscribe((albumTracks) => this.albumTracks = albumTracks);
 
-  private retrieveAlbumDetails(uri:String): Observable<any> {
-    return this.jsonRpcService.getData(BROWSE_LOCAL_LIBRARY_METHOD, {'uri': uri});
   }
 }
