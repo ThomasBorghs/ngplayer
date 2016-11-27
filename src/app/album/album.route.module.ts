@@ -18,7 +18,7 @@ const albumRoutes = [
   imports: [
     RouterModule.forChild(albumRoutes)
   ],
-  providers: [
+  exports: [
     RouterModule
   ]
 })

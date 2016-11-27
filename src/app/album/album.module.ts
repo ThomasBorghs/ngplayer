@@ -14,7 +14,6 @@ import {MaterialModule} from "@angular/material";
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule,
     AlbumRoutes
   ]
 })

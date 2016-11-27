@@ -8,7 +8,6 @@ import {RouterModule} from "@angular/router";
     ArtistOverviewComponent
   ],
   imports: [
-    RouterModule,
     ArtistRoutes
   ]
 })

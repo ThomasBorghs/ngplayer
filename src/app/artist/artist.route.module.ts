@@ -13,7 +13,7 @@ const artistRoutes = [
   imports: [
     RouterModule.forChild(artistRoutes)
   ],
-  providers: [
+  exports: [
     RouterModule
   ]
 })
