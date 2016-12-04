@@ -17,7 +17,7 @@ export class AlbumOverviewComponent implements OnInit {
 
   ngOnInit() {
     this.jsonRpcService
-      .getData(BROWSE_LOCAL_LIBRARY_METHOD, {'uri': 'local:directory'})
+      .performCall(BROWSE_LOCAL_LIBRARY_METHOD, {'uri': 'local:directory'})
       .subscribe((data) => this.albums = data.result);
   }
 }
