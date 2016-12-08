@@ -1,18 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import {BrowserModule} from "@angular/platform-browser";
+import {NgModule} from "@angular/core";
+import {HttpModule} from "@angular/http";
 import {MaterialModule} from "@angular/material";
-
-import { AppComponent } from './app.component';
-import { AlbumOverviewComponent } from './album/overview/album.overview.component';
+import {AppComponent} from "./app.component";
 import {JsonRpcService} from "./services/jsonrpc.service";
-import { AlbumDetailComponent } from './album/detail/album.detail.component';
-import {RouterModule} from "@angular/router";
-import {routes, AppRoutingModule} from "./app.route.module";
-import { ArtistOverviewComponent } from './artist/overview/artist.overview.component';
+import {AppRoutingModule} from "./app.route.module";
 import {AlbumModule} from "./album/album.module";
 import {ArtistModule} from "./artist/artist.module";
+import {NavigationModule} from "./navigation/navigation.module";
+import {PlaybackModule} from "./playback/playback.module";
 
 @NgModule({
   declarations: [
@@ -24,7 +20,9 @@ import {ArtistModule} from "./artist/artist.module";
     MaterialModule,
     AppRoutingModule,
     AlbumModule,
-    ArtistModule
+    ArtistModule,
+    NavigationModule,
+    PlaybackModule
   ],
   bootstrap: [
     AppComponent

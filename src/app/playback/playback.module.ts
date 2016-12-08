@@ -6,6 +6,11 @@ import { PlaybackComponent } from './playback.component';
   imports: [
     CommonModule
   ],
-  declarations: [PlaybackComponent]
+  declarations: [
+    PlaybackComponent
+  ],
+  exports: [
+    PlaybackComponent
+  ]
 })
 export class PlaybackModule { }
