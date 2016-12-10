@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PlaybackService} from "./service/playback.service";
 
 @Component({
   selector: 'ngp-playback',
@@ -6,18 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlaybackComponent implements OnInit {
 
-  constructor() { }
+  constructor(private playbackService: PlaybackService) { }
 
   playPressed() {
-    console.log("play");
+    this.playbackService.play();
   }
 
   pausePressed() {
-    console.log("pause");
+    this.playbackService.pause();
   }
 
   stopPressed() {
-    console.log("stop");
+    this.playbackService.stop();
   }
 
   ngOnInit() {
