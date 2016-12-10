@@ -8,7 +8,18 @@ export class PlaybackComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  playPressed() {
+    console.log("play");
   }
 
+  pausePressed() {
+    console.log("pause");
+  }
+
+  stopPressed() {
+    console.log("stop");
+  }
+
+  ngOnInit() {
+  }
 }

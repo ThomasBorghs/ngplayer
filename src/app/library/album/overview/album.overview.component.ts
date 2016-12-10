@@ -1,5 +1,5 @@
-import {Component, OnInit, Input} from "@angular/core";
-import {JsonRpcService} from "../../services/jsonrpc.service";
+import {Component, OnInit} from "@angular/core";
+import {JsonRPCService} from "../../../services/jsonrpc/jsonrpc.service";
 
 const BROWSE_LOCAL_LIBRARY_METHOD = 'core.library.browse'
 
@@ -11,7 +11,7 @@ export class AlbumOverviewComponent implements OnInit {
 
   albums: any[];
 
-  constructor(private jsonRpcService:JsonRpcService) {
+  constructor(private jsonRpcService: JsonRPCService) {
 
   }
 

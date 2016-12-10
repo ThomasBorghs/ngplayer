@@ -1,9 +1,7 @@
 import {Component, OnInit} from "@angular/core";
-import {JsonRpcService} from "../../services/jsonrpc.service";
 import {ActivatedRoute, Params} from "@angular/router";
-import {Observable} from "rxjs/Rx";
-
 import 'rxjs/add/operator/switchMap';
+import {JsonRPCService} from "../../../services/jsonrpc/jsonrpc.service";
 
 const LIBRARY_BROWSE_METHOD = 'core.library.browse';
 const LIBRARY_LOOKUP_METHOD = 'core.library.lookup';
@@ -19,15 +17,8 @@ export class AlbumDetailComponent implements OnInit {
 
   albumTracks: any[];
 
-  constructor(private jsonRpcService:JsonRpcService,
+  constructor(private jsonRpcService:JsonRPCService,
               private activatedRoute: ActivatedRoute) {
-  }
-
-  playTrack(uri:String) {
-    this.jsonRpcService.performCall(TRACKLIST_CLEAR_METHOD, {})
-      .switchMap(() => this.jsonRpcService.performCall(TRACKLIST_ADD_METHOD, {'uri': uri}))
-      .switchMap(() => this.jsonRpcService.performCall(PLAYBACK_PLAY_METHOD, {}))
-      .subscribe();
   }
 
   ngOnInit() {
