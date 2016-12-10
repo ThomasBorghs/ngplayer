@@ -2,12 +2,11 @@ import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Params} from "@angular/router";
 import 'rxjs/add/operator/switchMap';
 import {JsonRPCService} from "../../../services/jsonrpc/jsonrpc.service";
+import {TracklistService} from "../../../playback/service/tracklist.service";
+import {PlaybackService} from "../../../playback/service/playback.service";
 
 const LIBRARY_BROWSE_METHOD = 'core.library.browse';
 const LIBRARY_LOOKUP_METHOD = 'core.library.lookup';
-const TRACKLIST_CLEAR_METHOD = 'core.tracklist.clear';
-const TRACKLIST_ADD_METHOD = 'core.tracklist.add';
-const PLAYBACK_PLAY_METHOD = 'core.playback.play';
 
 @Component({
   selector: 'ngp-album',
@@ -18,7 +17,15 @@ export class AlbumDetailComponent implements OnInit {
   albumTracks: any[];
 
   constructor(private jsonRpcService:JsonRPCService,
+              private tracklistService:TracklistService,
+              private playbackService: PlaybackService,
               private activatedRoute: ActivatedRoute) {
+  }
+
+  trackClicked(trackUri: String) {
+    this.tracklistService.clear();
+    this.tracklistService.addTrack(trackUri);
+    this.playbackService.play();
   }
 
   ngOnInit() {
