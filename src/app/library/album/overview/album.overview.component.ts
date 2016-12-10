@@ -1,7 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {JsonRPCService} from "../../../services/jsonrpc/jsonrpc.service";
-
-const BROWSE_LOCAL_LIBRARY_METHOD = 'core.library.browse'
+import {LibraryService} from "../../service/library.service";
 
 @Component({
   selector: 'ngp-album-overview',
@@ -11,13 +10,9 @@ export class AlbumOverviewComponent implements OnInit {
 
   albums: any[];
 
-  constructor(private jsonRpcService: JsonRPCService) {
-
-  }
+  constructor(private libraryService:LibraryService) { }
 
   ngOnInit() {
-    this.jsonRpcService
-      .performCall(BROWSE_LOCAL_LIBRARY_METHOD, {'uri': 'local:directory'})
-      .subscribe((data) => this.albums = data.result);
+    this.libraryService.retrieveAlbumOverview().subscribe((data) => this.albums = data.result);
   }
 }

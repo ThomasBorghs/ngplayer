@@ -8,6 +8,7 @@ import {AppRoutingModule} from "./app.route.module";
 import {AlbumModule} from "./library/album/album.module";
 import {ArtistModule} from "./library/artist/artist.module";
 import {PlaybackModule} from "./playback/playback.module";
+import {LibraryService} from "./library/service/library.service";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {PlaybackModule} from "./playback/playback.module";
     AppComponent
   ],
   providers: [
+    LibraryService,
     JsonRPCService
   ]
 })

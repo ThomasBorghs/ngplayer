@@ -1,12 +1,9 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Params} from "@angular/router";
-import 'rxjs/add/operator/switchMap';
-import {JsonRPCService} from "../../../services/jsonrpc/jsonrpc.service";
+import "rxjs/add/operator/switchMap";
 import {TracklistService} from "../../../playback/service/tracklist.service";
 import {PlaybackService} from "../../../playback/service/playback.service";
-
-const LIBRARY_BROWSE_METHOD = 'core.library.browse';
-const LIBRARY_LOOKUP_METHOD = 'core.library.lookup';
+import {LibraryService} from "../../service/library.service";
 
 @Component({
   selector: 'ngp-album',
@@ -16,8 +13,8 @@ export class AlbumDetailComponent implements OnInit {
 
   albumTracks: any[];
 
-  constructor(private jsonRpcService:JsonRPCService,
-              private tracklistService:TracklistService,
+  constructor(private libraryService: LibraryService,
+              private tracklistService: TracklistService,
               private playbackService: PlaybackService,
               private activatedRoute: ActivatedRoute) {
   }
@@ -30,11 +27,7 @@ export class AlbumDetailComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params
-      .switchMap((params:Params) => this.jsonRpcService.performCall(LIBRARY_BROWSE_METHOD, {'uri': params['uri']}))
-      .map((data:any) => data.result)
-      .map((trackReferences:any[]) => trackReferences.map((reference) => reference.uri))
-      .switchMap((uris:any[]) => this.jsonRpcService.performCall(LIBRARY_LOOKUP_METHOD, {'uris': uris}))
-      .map((data:any) => Object.keys(data.result).map((key) => data.result[key][0]))
+      .switchMap((params: Params) => this.libraryService.retrieveAlbumDetails(params['uri']))
       .subscribe((albumTracks) => this.albumTracks = albumTracks);
   }
 }
