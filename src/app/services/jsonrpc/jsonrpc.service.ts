@@ -11,10 +11,10 @@ export class JsonRPCService {
 
   performCall(method: String, params: any): any {
     let body = JsonRPCService.createBody(method, params);
-    console.log(body);
+    // console.log(body)
     return this.http.post(BACKEND_URL, body)
       .map((response: Response) => response.json())
-      .do((x) => console.log(x));
+      // .do((x) => console.log(x));
   }
 
   private static createBody(method: String, params: any): any {

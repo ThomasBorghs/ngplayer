@@ -9,10 +9,12 @@ import {LibraryService} from "../../service/library.service";
 export class AlbumOverviewComponent implements OnInit {
 
   albums: any[];
+  allAlbums: any[];
 
   constructor(private libraryService:LibraryService) { }
 
   ngOnInit() {
-    this.libraryService.retrieveAlbumOverview().subscribe((data) => this.albums = data.result);
+    // this.libraryService.retrieveAlbumOverview().subscribe((data) => this.albums = data.result);
+    this.libraryService.getAlbums();
   }
 }
