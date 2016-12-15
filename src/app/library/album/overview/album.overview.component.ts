@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {JsonRPCService} from "../../../services/jsonrpc/jsonrpc.service";
 import {LibraryService, Album} from "../../service/library.service";
 
 @Component({
@@ -13,6 +12,6 @@ export class AlbumOverviewComponent implements OnInit {
   constructor(private libraryService:LibraryService) { }
 
   ngOnInit() {
-    this.libraryService.getAlbums().subscribe((albumsResult) => this.albums = albumsResult);
+    this.libraryService.getAlbums().subscribe((albums) => this.albums = albums);
   }
 }
