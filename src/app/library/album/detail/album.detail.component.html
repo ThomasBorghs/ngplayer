@@ -1,3 +1,7 @@
 <md-list>
-  <md-list-item (click)="trackClicked(track.uri);" *ngFor="let track of albumTracks">{{track.name}}</md-list-item>
+  <md-list-item (click)="trackClicked(track.uri);" *ngFor="let track of albumTracks">
+    <p md-line>
+      <span class="demo-2">{{track.track_number}}. {{track.name}} {{track.length}}</span>
+    </p>
+  </md-list-item>
 </md-list>

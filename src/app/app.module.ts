@@ -9,6 +9,7 @@ import {AlbumModule} from "./library/album/album.module";
 import {ArtistModule} from "./library/artist/artist.module";
 import {PlaybackModule} from "./playback/playback.module";
 import {LibraryService} from "./library/service/library.service";
+import {TrackModule} from "./library/track/track.module";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {LibraryService} from "./library/service/library.service";
     AppRoutingModule,
     AlbumModule,
     ArtistModule,
+    TrackModule,
     PlaybackModule
   ],
   bootstrap: [

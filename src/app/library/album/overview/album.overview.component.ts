@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {LibraryService, Album} from "../../service/library.service";
+import {LibraryService, SimpleAlbum} from "../../service/library.service";
 
 @Component({
   selector: 'ngp-album-overview',
@@ -7,11 +7,13 @@ import {LibraryService, Album} from "../../service/library.service";
 })
 export class AlbumOverviewComponent implements OnInit {
 
-  albums: Album[];
+  albums: SimpleAlbum[];
 
   constructor(private libraryService:LibraryService) { }
 
   ngOnInit() {
-    this.libraryService.getAlbums().subscribe((albums) => this.albums = albums);
+    this.libraryService.getAlbums()
+      .do(x => console.log(x))
+      .subscribe((albums) => this.albums = albums);
   }
 }
