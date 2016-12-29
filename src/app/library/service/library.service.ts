@@ -18,7 +18,6 @@ export class LibraryService {
   getAlbums() {
     return this.jsonRpcService.performCall(LIBRARY_BROWSE_METHOD, {'uri': 'local:directory:albums'})
       .map(data => data.result.map(LibraryService.createAlbumFromRawData))
-      .do(x => console.log(x))
   }
 
   private static createAlbumFromRawData(albumData) {

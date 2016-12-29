@@ -9,7 +9,7 @@ const albumRoutes = [
     component: AlbumOverviewComponent
   },
   {
-    path: 'albums/:uri',
+    path: 'albumDetail',
     component: AlbumDetailComponent
   }
 ];

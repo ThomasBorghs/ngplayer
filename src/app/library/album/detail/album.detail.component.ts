@@ -26,8 +26,8 @@ export class AlbumDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.params
-      .switchMap((params: Params) => this.libraryService.getAlbumDetails(params['uri']))
+    this.activatedRoute.queryParams
+      .switchMap((queryParams: Params) => this.libraryService.getAlbumDetails(queryParams['uri']))
       .subscribe((albumTracks) => this.albumTracks = albumTracks);
   }
 }
