@@ -1,5 +1,6 @@
 import {Component, OnInit} from "@angular/core";
-import {LibraryService, SimpleAlbum} from "../../service/library.service";
+import {LibraryService} from "../../service/library.service";
+import {SimpleAlbum} from "../../model/simple.album";
 
 @Component({
   selector: 'ngp-album-overview',

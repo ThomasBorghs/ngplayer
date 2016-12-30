@@ -1,7 +1,8 @@
 import {Component, OnInit} from "@angular/core";
-import {LibraryService, DetailedTrack} from "../../service/library.service";
+import {LibraryService} from "../../service/library.service";
 import {PlaybackQueueService} from "../../../playback/service/playback.queue.service";
 import {PlaybackService} from "../../../playback/service/playback.service";
+import {DetailedTrack} from "../../model/detailed.track";
 
 @Component({
   selector: 'ngp-track',
