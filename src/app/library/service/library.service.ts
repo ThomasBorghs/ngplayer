@@ -5,6 +5,10 @@ import "rxjs/add/operator/mergeAll";
 import "rxjs/add/operator/reduce";
 import "rxjs/Rx";
 import {Observable} from "rxjs";
+import {SimpleAlbum} from "../model/simple.album";
+import {SimpleArtist} from "../model/simple.artist";
+import {SimpleTrack} from "../model/simple.track";
+import {DetailedTrack} from "../model/detailed.track";
 
 const LIBRARY_BROWSE_METHOD = 'core.library.browse';
 const LIBRARY_LOOKUP_METHOD = 'core.library.lookup';
@@ -43,6 +47,7 @@ export class LibraryService {
       .flatMap(trackReferencesList => this.retrieveTrackDetailList(trackReferencesList))
       .map(trackData => new DetailedTrack(this.createArtists(trackData.artists), trackData.name, trackData.track_no, trackData.length, trackData.uri, trackData.album ? trackData.album.name : null))
       .reduce(LibraryService.collectTracks, [])
+      .map(trackArray => trackArray.sort(DetailedTrack.compare));
   }
 
   private recursivelyRetrieveAllTrackReferences(uri: string) {
@@ -67,54 +72,5 @@ export class LibraryService {
   private retrieveTrackDetailList(trackReferences: string[]) {
     return this.jsonRpcService.performCall(LIBRARY_LOOKUP_METHOD, {'uris': trackReferences})
       .flatMap(detailedTracksObject => Object.keys(detailedTracksObject.result).map(uriKey => detailedTracksObject.result[uriKey][0]));
-  }
-}
-
-export class SimpleAlbum {
-
-  private uri: string;
-  private artist: SimpleArtist;
-  private name: string;
-
-  constructor(uri:string, artist: SimpleArtist, name: string) {
-    this.uri = uri;
-    this.artist = artist;
-    this.name = name;
-  }
-}
-
-export class SimpleArtist {
-
-  private name: string;
-
-  constructor(name: string) {
-    this.name = name;
-  }
-}
-
-export class SimpleTrack {
-
-  private artists: SimpleArtist[];
-  private name: string;
-  private track_number: number;
-  private uri: string;
-  private length: number;
-
-  constructor(artists: SimpleArtist[], name: string, track_number: number, length: number, uri: string) {
-    this.artists = artists;
-    this.name = name;
-    this.track_number = track_number;
-    this.length = length;
-    this.uri = uri;
-  }
-}
-
-export class DetailedTrack extends SimpleTrack {
-
-  private albumName: string;
-
-  constructor(artists: SimpleArtist[], name: string, track_number: number, length: number, uri: string, albumName:string) {
-    super(artists, name, track_number, length, uri);
-    this.albumName = albumName;
   }
 }

@@ -5,7 +5,7 @@ const ADD_TRACK_TO_TRACKLIST_METHOD = 'core.tracklist.add';
 const CLEAR_TRACKLIST_METHOD = 'core.tracklist.clear';
 
 @Injectable()
-export class TracklistService {
+export class PlaybackQueueService {
 
   constructor(private jsonRPCService: JsonRPCService) { }
 

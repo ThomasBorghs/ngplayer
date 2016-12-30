@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Params} from "@angular/router";
 import "rxjs/add/operator/switchMap";
-import {TracklistService} from "../../../playback/service/tracklist.service";
+import {PlaybackQueueService} from "../../../playback/service/playback.queue.service";
 import {PlaybackService} from "../../../playback/service/playback.service";
 import {LibraryService} from "../../service/library.service";
 
@@ -14,7 +14,7 @@ export class AlbumDetailComponent implements OnInit {
   albumTracks: any[];
 
   constructor(private libraryService: LibraryService,
-              private tracklistService: TracklistService,
+              private tracklistService: PlaybackQueueService,
               private playbackService: PlaybackService,
               private activatedRoute: ActivatedRoute) {
   }
