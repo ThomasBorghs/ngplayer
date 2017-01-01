@@ -12,7 +12,7 @@ export class AlbumOverviewComponent implements OnInit {
 
   constructor(private libraryService:LibraryService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.libraryService.getAlbums()
       .do(x => console.log(x))
       .subscribe((albums) => this.albums = albums);

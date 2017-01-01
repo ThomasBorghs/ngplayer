@@ -10,19 +10,19 @@ export class PlaybackService {
 
   constructor(private jsonRPCService:JsonRPCService) { }
 
-  play() {
+  play(): void {
     this.performPlaybackCall(PLAY_METHOD);
   }
 
-  pause() {
+  pause(): void {
     this.performPlaybackCall(PAUSE_METHOD);
   }
 
-  stop() {
+  stop(): void {
     this.performPlaybackCall(STOP_METHOD);
   }
 
-  private performPlaybackCall(playbackMethod: String) {
+  private performPlaybackCall(playbackMethod: String): void {
     this.jsonRPCService.performCall(playbackMethod, {}).subscribe();
   }
 }

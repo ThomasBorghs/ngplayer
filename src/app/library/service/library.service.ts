@@ -19,29 +19,29 @@ export class LibraryService {
   constructor(private jsonRpcService: JsonRPCService) {
   }
 
-  getAlbums() {
+  getAlbums(): Observable<SimpleAlbum[]> {
     return this.jsonRpcService.performCall(LIBRARY_BROWSE_METHOD, {'uri': 'local:directory:albums'})
       .map(data => data.result.map(LibraryService.createAlbumFromRawData))
   }
 
-  private static createAlbumFromRawData(albumData) {
-    let albumArtistAndName:string[] = albumData.name.split(" - ");
+  private static createAlbumFromRawData(albumData): SimpleAlbum {
+    let albumArtistAndName: string[] = albumData.name.split(" - ");
     return new SimpleAlbum(albumData.uri, new SimpleArtist(albumArtistAndName[0]), albumArtistAndName[1]);
   }
 
-  getAlbumDetails(directoryUri: string): any[] {
+  getAlbumTracks(directoryUri: string): Observable<SimpleTrack[]> {
     return this.jsonRpcService.performCall(LIBRARY_BROWSE_METHOD, {'uri': directoryUri})
       .map((data: any) => data.result.map((reference) => reference.uri))
       .switchMap((uris: any[]) => this.jsonRpcService.performCall(LIBRARY_LOOKUP_METHOD, {'uris': uris}))
-      .map((data: any) => Object.keys(data.result).map((key) => data.result[key][0]).sort((n1,n2) => n1.track_no - n2.track_no))
+      .map((data: any) => Object.keys(data.result).map((key) => data.result[key][0]).sort((n1, n2) => n1.track_no - n2.track_no))
       .map(trackDataList => trackDataList.map(trackData => new SimpleTrack(this.createArtists(trackData.artists), trackData.name, trackData.track_no, trackData.length, trackData.uri)));
   }
 
-  private createArtists(artists: any[]) {
+  private createArtists(artists: any[]): SimpleArtist[] {
     return artists.map(artistData => new SimpleArtist(artistData.name));
   }
 
-  getAllTracks() {
+  getAllTracks(): Observable<DetailedTrack[]> {
     return this.recursivelyRetrieveAllTrackReferences('local:directory')
       .reduce(LibraryService.collectAllTrackUris, [])
       .flatMap(trackReferencesList => this.retrieveTrackDetailList(trackReferencesList))
@@ -50,27 +50,27 @@ export class LibraryService {
       .map(trackArray => trackArray.sort(DetailedTrack.compare));
   }
 
-  private recursivelyRetrieveAllTrackReferences(uri: string) {
+  private recursivelyRetrieveAllTrackReferences(uri: string): Observable<string> {
     if (uri.startsWith('local:directory')) {
       return this.jsonRpcService.performCall(LIBRARY_BROWSE_METHOD, {'uri': uri})
         .flatMap((data: any) => data.result)
-        .flatMap(directory => this.recursivelyRetrieveAllTrackReferences(directory.uri));
+        .flatMap(directory => this.recursivelyRetrieveAllTrackReferences(directory.uri))
     } else {
       return Observable.of(uri);
     }
   }
 
-  private static collectAllTrackUris(collector: string[], uri) {
+  private static collectAllTrackUris(collector: string[], uri): string[] {
     return collector.concat(uri);
   }
 
-  private static collectTracks(collector: DetailedTrack[], detailedTrack:DetailedTrack) {
-    collector.push(detailedTrack);
-    return collector;
-  }
-
-  private retrieveTrackDetailList(trackReferences: string[]) {
+  private retrieveTrackDetailList(trackReferences: string[]): Observable<any> {
     return this.jsonRpcService.performCall(LIBRARY_LOOKUP_METHOD, {'uris': trackReferences})
       .flatMap(detailedTracksObject => Object.keys(detailedTracksObject.result).map(uriKey => detailedTracksObject.result[uriKey][0]));
+  }
+
+  private static collectTracks(collector: DetailedTrack[], detailedTrack: DetailedTrack): DetailedTrack[] {
+    collector.push(detailedTrack);
+    return collector;
   }
 }

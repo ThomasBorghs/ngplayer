@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { AlbumDetailComponent } from './album.detail.component';
 
-describe('AlbumComponent', () => {
+describe('AlbumDetailComponent', () => {
   let component: AlbumDetailComponent;
   let fixture: ComponentFixture<AlbumDetailComponent>;
 

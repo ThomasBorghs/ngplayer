@@ -8,7 +8,7 @@ export class ArtistOverviewComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

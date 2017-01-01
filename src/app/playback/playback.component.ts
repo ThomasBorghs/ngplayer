@@ -9,11 +9,11 @@ export class PlaybackComponent implements OnInit {
 
   constructor(private playbackService: PlaybackService) { }
 
-  playPressed() {
+  playPressed(): void {
     this.playbackService.play();
   }
 
-  pausePressed() {
+  pausePressed(): void {
     this.playbackService.pause();
   }
 
@@ -21,6 +21,6 @@ export class PlaybackComponent implements OnInit {
     this.playbackService.stop();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 }

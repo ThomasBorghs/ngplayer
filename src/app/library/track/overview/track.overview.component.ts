@@ -6,24 +6,24 @@ import {DetailedTrack} from "../../model/detailed.track";
 
 @Component({
   selector: 'ngp-track',
-  templateUrl: 'track.overview.component.html'
+  templateUrl: './track.overview.component.html'
 })
 export class TrackOverviewComponent implements OnInit {
 
   tracks: DetailedTrack[];
 
   constructor(private libraryService: LibraryService,
-              private tracklistService:PlaybackQueueService,
-              private playbackService:PlaybackService) {
+              private tracklistService: PlaybackQueueService,
+              private playbackService: PlaybackService) {
   }
 
-  trackClicked(trackUri: String) {
+  trackClicked(trackUri: string): void {
     this.tracklistService.clear();
     this.tracklistService.addTrack(trackUri);
     this.playbackService.play();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.libraryService.getAllTracks().subscribe(trackList => this.tracks = trackList);
   }
 }
