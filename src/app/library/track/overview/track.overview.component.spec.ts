@@ -4,14 +4,16 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { TrackOverviewComponent } from './track.overview.component';
+import {MaterialModule} from "@angular/material";
 
-describe('TrackComponent', () => {
+describe('TrackOverviewComponent', () => {
   let component: TrackOverviewComponent;
   let fixture: ComponentFixture<TrackOverviewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TrackOverviewComponent ]
+      declarations: [ TrackOverviewComponent ],
+      imports: [ MaterialModule ]
     })
     .compileComponents();
   }));
