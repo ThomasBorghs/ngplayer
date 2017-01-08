@@ -30,8 +30,11 @@ describe('AlbumDetailComponent', () => {
     }
   }
 
-  const DEFAULT_ARTIST = new SimpleArtist("artistName");
-  const DEFAULT_TRACK = new SimpleTrack([DEFAULT_ARTIST], "trackname", 1, 1, "uri");
+  const ARTIST_1 = new SimpleArtist("artistName 1");
+  const ARTIST_2 = new SimpleArtist("artistName 2");
+
+  const TRACK_1 = new SimpleTrack([ARTIST_1], "trackname 1", 1, 10, "uri 1");
+  const TRACK_2 = new SimpleTrack([ARTIST_2], "trackname 2", 2, 20, "uri 2");
 
   let component: AlbumDetailComponent;
   let fixture: ComponentFixture<AlbumDetailComponent>;
@@ -41,7 +44,7 @@ describe('AlbumDetailComponent', () => {
       declarations: [AlbumDetailComponent],
       imports: [MaterialModule],
       providers: [
-        {provide: LibraryService, useValue: jasmine.createSpyObj('LibraryService', ['getAlbumTracks'])},
+        {provide: LibraryService, useValue: jasmine.createSpyObj('LibraryService', ['getSortedAlbumTracks'])},
         {provide: PlaybackQueueService, useValue: jasmine.createSpyObj('PlaybackQeueueService', ['play'])},
         {provide: PlaybackService, useValue: jasmine.createSpyObj('PlaybackQueueService', ['clear', 'addTrack'])},
         {provide: ActivatedRoute, useValue: new ActivatedRouteStub()}]
@@ -53,26 +56,21 @@ describe('AlbumDetailComponent', () => {
     component = fixture.componentInstance;
   });
 
-  describe('component initialisation', () => {
+  it('retrieves album tracks for given URI on initialisation', fakeAsync(() => {
+    TestBed.get(ActivatedRoute).testQueryParams = {uri: 'album directory uri'};
+    TestBed.get(LibraryService).getSortedAlbumTracks.and.returnValue(Observable.of([TRACK_1, TRACK_2]));
+    fixture.detectChanges();
 
-    it('initialises the component correctly when a known URI was given', fakeAsync(() => {
-      TestBed.get(ActivatedRoute).testQueryParams = {id: 1};
-      TestBed.get(LibraryService).getAlbumTracks.and.returnValue(Observable.of([DEFAULT_TRACK]));
-      fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    let trackListElement = fixture.debugElement.query(By.css('md-list'));
+    expect(trackListElement).toBeTruthy();
+    expect(trackListElement.children.length).toEqual(2);
 
-      tick();
-      fixture.detectChanges();
-      let de = fixture.debugElement.query(By.css('md-list-item'));
-      let listElement = de.nativeElement;
-      expect(listElement).toBeTruthy();
+    expect(trackListElement.children[0].nativeElement.innerText).toEqual('1. trackname 1 10');
+    expect(trackListElement.children[1].nativeElement.innerText).toEqual('2. trackname 2 20');
 
-      // <md-list>
-      // <md-list-item (click)="trackClicked(track.uri);" *ngFor="let track of albumTracks">
-      // <p md-line>
-      // <span class="demo-2">{{track.track_number}}. {{track.name}} {{track.length}}</span>
-      // </p>
-      // </md-list-item>
-      // </md-list>
-    });
+    expect(TestBed.get(LibraryService).getSortedAlbumTracks).toHaveBeenCalledWith('album directory uri');
   });
+
 });

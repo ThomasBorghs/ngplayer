@@ -29,7 +29,7 @@ export class LibraryService {
     return new SimpleAlbum(albumData.uri, new SimpleArtist(albumArtistAndName[0]), albumArtistAndName[1]);
   }
 
-  getAlbumTracks(directoryUri: string): Observable<SimpleTrack[]> {
+  getSortedAlbumTracks(directoryUri: string): Observable<SimpleTrack[]> {
     return this.jsonRpcService.performCall(LIBRARY_BROWSE_METHOD, {'uri': directoryUri})
       .map((data: any) => data.result.map((reference) => reference.uri))
       .switchMap((uris: any[]) => this.jsonRpcService.performCall(LIBRARY_LOOKUP_METHOD, {'uris': uris}))
