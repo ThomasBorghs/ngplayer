@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import {ComponentFixture, TestBed, async} from "@angular/core/testing";
+import {ComponentFixture, TestBed, async, fakeAsync, tick} from "@angular/core/testing";
 import {AlbumDetailComponent} from "./album.detail.component";
 import {MaterialModule} from "@angular/material";
 import {LibraryService} from "../../service/library.service";
@@ -35,40 +35,44 @@ describe('AlbumDetailComponent', () => {
 
   let component: AlbumDetailComponent;
   let fixture: ComponentFixture<AlbumDetailComponent>;
-  let libraryServiceStub;
-  let playbackServiceStub;
-  let playbackQueueServiceStub;
-  let activatedRouteStub = new ActivatedRouteStub();
 
   beforeEach(async(() => {
-    libraryServiceStub = jasmine.createSpyObj('LibraryService', ['getAlbumTracks']);
-    playbackServiceStub = jasmine.createSpyObj('PlaybackQeueueService', ['play']);
-    playbackQueueServiceStub = jasmine.createSpyObj('PlaybackQueueService', ['clear', 'addTrack']);
-
     TestBed.configureTestingModule({
       declarations: [AlbumDetailComponent],
       imports: [MaterialModule],
       providers: [
-        {provide: LibraryService, useValue: libraryServiceStub},
-        {provide: PlaybackQueueService, useValue: playbackQueueServiceStub},
-        {provide: PlaybackService, useValue: playbackServiceStub},
-        {provide: ActivatedRoute, useValue: activatedRouteStub}]
+        {provide: LibraryService, useValue: jasmine.createSpyObj('LibraryService', ['getAlbumTracks'])},
+        {provide: PlaybackQueueService, useValue: jasmine.createSpyObj('PlaybackQeueueService', ['play'])},
+        {provide: PlaybackService, useValue: jasmine.createSpyObj('PlaybackQueueService', ['clear', 'addTrack'])},
+        {provide: ActivatedRoute, useValue: new ActivatedRouteStub()}]
     }).compileComponents();
   }));
 
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AlbumDetailComponent);
+    component = fixture.componentInstance;
+  });
+
   describe('component initialisation', () => {
 
-    it('initialises the component correctly when a known URI was given', async(() => {
-      activatedRouteStub.testQueryParams = {id: 1};
-      libraryServiceStub.getAlbumTracks.and.returnValue(Observable.of([DEFAULT_TRACK]));
-
-      fixture = TestBed.createComponent(AlbumDetailComponent);
-      component = fixture.componentInstance;
-      let de = fixture.debugElement.query(By.css('md-list'));
-      let el = de.nativeElement;
-
+    it('initialises the component correctly when a known URI was given', fakeAsync(() => {
+      TestBed.get(ActivatedRoute).testQueryParams = {id: 1};
+      TestBed.get(LibraryService).getAlbumTracks.and.returnValue(Observable.of([DEFAULT_TRACK]));
       fixture.detectChanges();
-      expect(el).toBeTruthy();
-    }));
+
+      tick();
+      fixture.detectChanges();
+      let de = fixture.debugElement.query(By.css('md-list-item'));
+      let listElement = de.nativeElement;
+      expect(listElement).toBeTruthy();
+
+      // <md-list>
+      // <md-list-item (click)="trackClicked(track.uri);" *ngFor="let track of albumTracks">
+      // <p md-line>
+      // <span class="demo-2">{{track.track_number}}. {{track.name}} {{track.length}}</span>
+      // </p>
+      // </md-list-item>
+      // </md-list>
+    });
   });
 });
