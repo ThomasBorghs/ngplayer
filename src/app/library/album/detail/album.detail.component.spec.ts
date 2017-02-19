@@ -18,11 +18,11 @@ describe('AlbumDetailComponent', () => {
   const ARTIST_2 = new SimpleArtist("artistName 2");
 
   const TRACK_1_URI = "uri 1";
-  const TRACK_1 = new SimpleTrack([ARTIST_1], "trackname 1", 1, 10, TRACK_1_URI);
-  const TRACK_2 = new SimpleTrack([ARTIST_2], "trackname 2", 2, 20, "uri 2");
+  const TRACK_1 = new SimpleTrack([ARTIST_1], "track name 1", 1, 10, TRACK_1_URI);
+  const TRACK_2 = new SimpleTrack([ARTIST_2], "track name 2", 2, 20, "uri 2");
 
-  const EXPECTED_TRACK_1_INFO = '1. trackname 1 10';
-  const EXPECTED_TRACK_2_INFO = '2. trackname 2 20';
+  const EXPECTED_TRACK_1_INFO = '1. track name 1 10';
+  const EXPECTED_TRACK_2_INFO = '2. track name 2 20';
 
   const ALBUM_DIRECTORY_URI = 'album directory uri';
 
@@ -53,7 +53,7 @@ describe('AlbumDetailComponent', () => {
 
     tick();
     fixture.detectChanges();
-  };
+  }
 
   describe('ngOnInit', () => {
     it('retrieves album tracks for given URI on initialisation', fakeAsync(() => {

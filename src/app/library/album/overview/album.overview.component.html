@@ -1,9 +1,5 @@
 <md-nav-list>
-  <a routerLink="/albumDetail/" [queryParams]="{uri:album.uri}" md-list-item *ngFor="let album of albums">
-      <img md-list-avatar src="..." alt="...">
-      <h3 md-line >{{album.name}}</h3>
-      <p md-line>
-        <span class="demo-2">{{album.artist.name}}</span>
-      </p>
+  <a routerLink="/albumDetail/" ([queryParams])="{uri:album.uri}" md-list-item *ngFor="let album of albums">
+      <h3 md-line >{{album.name}} - {{album.artist.name}}</h3>
   </a>
 </md-nav-list>
