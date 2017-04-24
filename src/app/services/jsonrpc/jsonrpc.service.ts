@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {Http, Response} from "@angular/http";
-import {Observable} from "rxjs";
 
 let BACKEND_URL = 'http://localhost:6680/mopidy/rpc';
 

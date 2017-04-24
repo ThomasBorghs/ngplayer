@@ -6,6 +6,8 @@ import {Observable} from "rxjs";
 import {SimpleAlbum} from "../../model/simple.album";
 import {SimpleArtist} from "../../model/simple.artist";
 import {By} from "@angular/platform-browser";
+import {RouterTestingModule} from "@angular/router/testing";
+import {CommonModule} from "@angular/common";
 
 describe('AlbumOverviewComponent', () => {
 
@@ -21,7 +23,7 @@ describe('AlbumOverviewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AlbumOverviewComponent],
-      imports: [MaterialModule],
+      imports: [RouterTestingModule, CommonModule, MaterialModule],
       providers: [{provide: LibraryService, useValue: jasmine.createSpyObj('LibraryService', ['getAlbums'])}]
     })
       .compileComponents();
@@ -48,7 +50,7 @@ describe('AlbumOverviewComponent', () => {
 
     function assertAlbumEntry(albumEntry, expectedTextContent) {
       expect(albumEntry.attributes['routerLink']).toEqual("/albumDetail/");
-      expect(albumEntry.children[0].nativeElement.innerText).toEqual(expectedTextContent);
+      expect(albumEntry.nativeElement.children[0].children[0].children[0].innerText).toEqual(expectedTextContent);
     };
   });
 });
