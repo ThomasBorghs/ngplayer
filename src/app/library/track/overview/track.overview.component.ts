@@ -13,13 +13,13 @@ export class TrackOverviewComponent implements OnInit {
   tracks: DetailedTrack[];
 
   constructor(private libraryService: LibraryService,
-              private tracklistService: PlaybackQueueService,
+              private playbackQueueService: PlaybackQueueService,
               private playbackService: PlaybackService) {
   }
 
   trackClicked(trackUri: string): void {
-    this.tracklistService.clear();
-    this.tracklistService.addTrack(trackUri);
+    this.playbackQueueService.clear();
+    this.playbackQueueService.addTrack(trackUri);
     this.playbackService.play();
   }
 

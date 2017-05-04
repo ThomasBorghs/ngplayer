@@ -21,7 +21,7 @@ describe('AlbumDetailComponent', () => {
   const TRACK_1 = new SimpleTrack([ARTIST_1], "track name 1", 1, 10, TRACK_1_URI);
   const TRACK_2 = new SimpleTrack([ARTIST_2], "track name 2", 2, 20, "uri 2");
 
-  const EXPECTED_TRACK_1_INFO = '1. track name 1 10';
+  const EXPECTED_TRACK_1_INFO = '1. track name 1 10\n';
   const EXPECTED_TRACK_2_INFO = '2. track name 2 20';
 
   const ALBUM_DIRECTORY_URI = 'album directory uri';
@@ -59,12 +59,11 @@ describe('AlbumDetailComponent', () => {
     it('retrieves album tracks for given URI on initialisation', fakeAsync(() => {
       createDefaultComponent();
 
-      let trackListElement = fixture.debugElement.query(By.css('md-list'));
-      expect(trackListElement).toBeTruthy();
-      expect(trackListElement.children.length).toEqual(2);
-
-      expect(trackListElement.children[0].nativeElement.innerText).toEqual(EXPECTED_TRACK_1_INFO);
-      expect(trackListElement.children[1].nativeElement.innerText).toEqual(EXPECTED_TRACK_2_INFO);
+      let trackList = fixture.debugElement.queryAll(By.css('md-list-item'));
+      expect(trackList).toBeTruthy();
+      expect(trackList.length).toBe(2);
+      expect(trackList[0].nativeElement.innerText).toEqual(EXPECTED_TRACK_1_INFO);
+      expect(trackList[1].nativeElement.innerText).toEqual(EXPECTED_TRACK_2_INFO);
 
       expect(TestBed.get(LibraryService).getSortedAlbumTracks).toHaveBeenCalledWith(ALBUM_DIRECTORY_URI);
     }));

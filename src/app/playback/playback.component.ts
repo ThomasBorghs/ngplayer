@@ -9,15 +9,15 @@ export class PlaybackComponent implements OnInit {
 
   constructor(private playbackService: PlaybackService) { }
 
-  playPressed(): void {
+  playClicked(): void {
     this.playbackService.play();
   }
 
-  pausePressed(): void {
+  pauseClicked(): void {
     this.playbackService.pause();
   }
 
-  stopPressed() {
+  stopClicked() {
     this.playbackService.stop();
   }
 

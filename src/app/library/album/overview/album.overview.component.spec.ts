@@ -11,8 +11,8 @@ import {CommonModule} from "@angular/common";
 
 describe('AlbumOverviewComponent', () => {
 
-  const ARTIST_1 = new SimpleArtist("kings of leon");
-  const ARTIST_2 = new SimpleArtist("muse");
+  const ARTIST_1 = new SimpleArtist("artist 1");
+  const ARTIST_2 = new SimpleArtist("artist 2");
 
   const ALBUM_1 = new SimpleAlbum("uri album 1", ARTIST_1, "album 1");
   const ALBUM_2 = new SimpleAlbum("uri album 2", ARTIST_2, "album 2");
@@ -43,14 +43,14 @@ describe('AlbumOverviewComponent', () => {
 
       let albumElements = fixture.debugElement.queryAll(By.css('a'));
       expect(albumElements.length).toEqual(2);
-      assertAlbumEntry(albumElements[0], "album 1 - kings of leon");
-      assertAlbumEntry(albumElements[1], "album 2 - muse");
+      assertAlbumEntry(albumElements[0], "album 1 - artist 1");
+      assertAlbumEntry(albumElements[1], "album 2 - artist 2");
       expect(TestBed.get(LibraryService).getAlbums).toHaveBeenCalled();
     }));
 
     function assertAlbumEntry(albumEntry, expectedTextContent) {
       expect(albumEntry.attributes['routerLink']).toEqual("/albumDetail/");
       expect(albumEntry.nativeElement.children[0].children[0].children[0].innerText).toEqual(expectedTextContent);
-    };
+    }
   });
 });
