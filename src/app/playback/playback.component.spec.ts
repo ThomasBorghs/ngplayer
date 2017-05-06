@@ -26,7 +26,7 @@ describe('PlaybackComponent', () => {
 
   describe('playClicked', () => {
     it('starts playback when play was clicked', () => {
-      let button = fixture.debugElement.query(By.css('button #play'));
+      let button = fixture.debugElement.query(By.css('#play'));
       button.nativeElement.click();
 
       expect(TestBed.get(PlaybackService).play).toHaveBeenCalled();
@@ -35,7 +35,7 @@ describe('PlaybackComponent', () => {
 
   describe('pauseClicked', () => {
     it('pauses playback when pause was clicked', () => {
-      let button = fixture.debugElement.query(By.css('button #pause'));
+      let button = fixture.debugElement.query(By.css('#pause'));
       button.nativeElement.click();
 
       expect(TestBed.get(PlaybackService).pause).toHaveBeenCalled();
@@ -44,7 +44,7 @@ describe('PlaybackComponent', () => {
 
   describe('stopClicked', () => {
     it('stops playback when stop was clicked', () => {
-      let button = fixture.debugElement.query(By.css('button #stop'));
+      let button = fixture.debugElement.query(By.css('#stop'));
       button.nativeElement.click();
 
       expect(TestBed.get(PlaybackService).stop).toHaveBeenCalled();

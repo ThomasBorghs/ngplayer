@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Http, Response} from "@angular/http";
 
-let BACKEND_URL = 'http://localhost:6680/mopidy/rpc';
+export const BACKEND_URL = 'http://localhost:6680/mopidy/rpc';
 
 @Injectable()
 export class JsonRPCService {

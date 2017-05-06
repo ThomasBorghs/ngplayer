@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { PlaybackComponent } from './playback.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {PlaybackComponent} from './playback.component';
 import {PlaybackService} from "./service/playback.service";
 import {PlaybackQueueService} from "./service/playback.queue.service";
 
@@ -19,4 +19,6 @@ import {PlaybackQueueService} from "./service/playback.queue.service";
     PlaybackQueueService
   ]
 })
-export class PlaybackModule { }
+
+export class PlaybackModule {
+}

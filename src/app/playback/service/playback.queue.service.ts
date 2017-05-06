@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {JsonRPCService} from "../../services/jsonrpc/jsonrpc.service";
 
-const ADD_TRACK_TO_PLAYBACK_QUEUE_METHOD = 'core.tracklist.add';
-const CLEAR_PLAYBACK_QUEUE_METHOD = 'core.tracklist.clear';
+export const ADD_TRACK_TO_PLAYBACK_QUEUE_METHOD = 'core.tracklist.add';
+export const CLEAR_PLAYBACK_QUEUE_METHOD = 'core.tracklist.clear';
 
 @Injectable()
 export class PlaybackQueueService {
