@@ -11,7 +11,7 @@ describe('JsonRPCService', () => {
   const RESPONSE_PARAM = 'response param';
   const JSON_REPONSE = {responseParam: RESPONSE_PARAM};
 
-  let httpStub: Http;
+  let httpStub;
   let jsonRPCService: JsonRPCService;
 
   beforeEach(() => {

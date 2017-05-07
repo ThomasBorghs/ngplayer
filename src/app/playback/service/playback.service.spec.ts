@@ -7,7 +7,7 @@ import {Observable} from "rxjs";
 
 describe('PlaybackService', () => {
 
-  let jsonRPCServiceStub: JsonRPCService;
+  let jsonRPCServiceStub;
   let playbackService: PlaybackService;
 
   beforeEach(() => {
