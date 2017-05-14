@@ -1,30 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const speaker = require('speaker');
 const ogg = require('ogg');
 const lame = require('lame');
 const fs = require('fs');
 const flac = require('flac-bindings');
+const Player = require('../player');
 
-router.get('/', (req, res) => {
-  const readStream = fs.createReadStream('/Users/thomasborghs/muziek/test.flac');
+// mp3
+// readStream.pipe(new lame.Decoder()).pipe(mySpeaker);
 
-  const mySpeaker = new speaker({
-    channels: 2,          // 2 channels
-    bitDepth: 16,         // 16-bit samples
-    sampleRate: 44100     // 44,100 Hz sample rate
-  });
+// ogg - not working
+// readStream.pipe(new ogg.Decoder()).pipe(mySpeaker);
 
-  // mp3
-  // readStream.pipe(new lame.Decoder()).pipe(mySpeaker);
+const PCMSource = fs.createReadStream('/Users/thomasborghs/muziek/test.flac').pipe(new flac.StreamDecoder());
+const player = new Player(PCMSource);
 
-  // ogg - not working
-  // readStream.pipe(new ogg.Decoder()).pipe(mySpeaker);
+router.get('/play', (req, res) => {
+  player.resumePlayback();
+  res.send('playing test flac');
+});
 
-  // flac
-  readStream.pipe(new flac.StreamDecoder()).pipe(mySpeaker);
+router.get('/stop', (req, res) => {
+  player.stopPlayback();
+  res.send('stopping test flac');
+});
 
-  res.send('api works - playing test flac');
+router.get('/pause', (req, res) => {
+  player.togglePause();
+  res.send('pausing test flac');
 });
 
 module.exports = router;
