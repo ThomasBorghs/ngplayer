@@ -4,7 +4,7 @@ module.exports = Player;
 
 function Player(PCMSource) {
 
-  this.paused = false;
+  this.paused = true;
   this.PCMsource = PCMSource;
 
   this.createSpeaker = () => {
@@ -25,17 +25,22 @@ function Player(PCMSource) {
   this.togglePause = () => {
     if (!this.paused) {
       this.stopPlayback();
-      this.paused = true;
     } else {
       this.resumePlayback();
     }
   };
 
   this.stopPlayback = () => {
-    this.PCMsource.unpipe();
+    if (!this.paused) {
+      this.PCMsource.unpipe();
+      this.paused = true;
+    }
   };
 
   this.resumePlayback = () => {
-    this.PCMsource.pipe(this.createSpeaker());
+    if (this.paused) {
+      this.PCMsource.pipe(this.createSpeaker());
+      this.paused = false;
+    }
   };
 }
