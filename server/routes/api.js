@@ -16,13 +16,8 @@ const PCMSource = fs.createReadStream('/Users/thomasborghs/muziek/test.flac').pi
 const player = new Player(PCMSource);
 
 router.get('/play', (req, res) => {
-  player.resumePlayback();
+  player.startPlayback();
   res.send('playing test flac');
-});
-
-router.get('/stop', (req, res) => {
-  player.stopPlayback();
-  res.send('stopping test flac');
 });
 
 router.get('/pause', (req, res) => {

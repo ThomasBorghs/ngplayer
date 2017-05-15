@@ -8,38 +8,26 @@ function Player(PCMSource) {
   this.PCMsource = PCMSource;
 
   this.createSpeaker = () => {
-    const mySpeaker = new speaker({
+    return new speaker({
       channels: 2,          // 2 channels
       bitDepth: 16,         // 16-bit samples
       sampleRate: 44100     // 44,100 Hz sample rate
     });
+  };
 
-    // close the speaker when unpiped
-    mySpeaker.on('unpipe', () => {
-      mySpeaker.close();
-    });
+  this.mySpeaker = this.createSpeaker();
 
-    return mySpeaker
+  this.startPlayback = () => {
+    this.PCMsource.pipe(this.mySpeaker);
+    this.paused = false;
   };
 
   this.togglePause = () => {
     if (!this.paused) {
-      this.stopPlayback();
-    } else {
-      this.resumePlayback();
-    }
-  };
-
-  this.stopPlayback = () => {
-    if (!this.paused) {
-      this.PCMsource.unpipe();
+      this.mySpeaker.cork();
       this.paused = true;
-    }
-  };
-
-  this.resumePlayback = () => {
-    if (this.paused) {
-      this.PCMsource.pipe(this.createSpeaker());
+    } else {
+      this.mySpeaker.uncork();
       this.paused = false;
     }
   };
