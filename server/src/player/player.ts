@@ -23,11 +23,11 @@ export class Player {
 
     this.router = express.Router();
     this.router.get('/player/play', (req, res) => {
-      this.startPlayback();
+      // this.startPlayback();
       res.send('playing test flac');
     });
     this.router.get('/player/pause', (req, res) => {
-      this.togglePause();
+      // this.togglePause();
       res.send('pausing test flac');
     });
   }

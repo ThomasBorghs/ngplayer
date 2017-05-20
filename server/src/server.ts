@@ -29,13 +29,13 @@ class Application {
   // Configure API endpoints.
   private routes(): void {
     let router = express.Router();
-    router.get('*', (req, res) => {
+    router.get('/', (req, res) => {
       res.sendFile(path.join(__dirname, 'dist/index.html'));
     });
-
-    this.express.use('/', router);
+    this.express.use('/app', router);
     this.express.use('/api', this.player.router);
     this.express.use('/api', this.library.router);
+
   }
 
   private loadStatics() {
