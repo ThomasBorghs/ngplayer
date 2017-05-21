@@ -12,7 +12,7 @@ export class Player {
 
   constructor() {
     this.paused = true;
-    // this.PCMsource = fs.createReadStream('/Users/thomasborghs/muziek/test.flac').pipe(new flac.StreamDecoder());
+    this.PCMsource = fs.createReadStream('/Users/thomasborghs/muziek/test.flac').pipe(new flac.StreamDecoder());
     this.mySpeaker = (() => {
       return new Speaker({
         channels: 2,          // 2 channels
@@ -23,11 +23,11 @@ export class Player {
 
     this.router = express.Router();
     this.router.get('/player/play', (req, res) => {
-      // this.startPlayback();
+      this.startPlayback();
       res.send('playing test flac');
     });
     this.router.get('/player/pause', (req, res) => {
-      // this.togglePause();
+      this.togglePause();
       res.send('pausing test flac');
     });
   }
