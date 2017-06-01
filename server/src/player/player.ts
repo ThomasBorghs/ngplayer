@@ -6,13 +6,14 @@ import * as fs from 'fs';
 export class Player {
 
   public router: express.Router;
+
   private paused: boolean;
-  private PCMsource;
-  private mySpeaker;
+  private PCMSource: any;
+  private mySpeaker: any;
 
   constructor() {
     this.paused = true;
-    this.PCMsource = fs.createReadStream('/Users/thomasborghs/muziek/test.flac').pipe(new flac.StreamDecoder());
+    this.PCMSource = fs.createReadStream('/Users/thomasborghs/muziek/test.flac').pipe(new flac.StreamDecoder());
     this.mySpeaker = (() => {
       return new Speaker({
         channels: 2,          // 2 channels
@@ -33,7 +34,7 @@ export class Player {
   }
 
   private startPlayback = () => {
-    this.PCMsource.pipe(this.mySpeaker);
+    this.PCMSource.pipe(this.mySpeaker);
     this.paused = false;
   };
 
