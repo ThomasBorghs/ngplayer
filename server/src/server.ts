@@ -2,12 +2,13 @@ import * as path from 'path';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 
-import {Library} from "./library/library";
-import {Player} from "./player/player";
+import Library from "./library/library";
+import Player from "./player/player";
 
 class Application {
 
   public express: express.Application;
+
   private library: Library;
   private player: Player;
 

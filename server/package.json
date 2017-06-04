@@ -12,12 +12,16 @@
   },
   "private": true,
   "dependencies": {
-    "typescript": "2.3.2",
-    "express": "4.15.3",
     "body-parser": "1.17.2",
-    "speaker": "0.3.0",
+    "debug": "2.6.8",
+    "express": "4.15.3",
     "flac-bindings": "1.2.1",
-    "debug": "2.6.8"
+    "musicmetadata": "^2.0.5",
+    "parse-filepath": "^1.0.1",
+    "speaker": "0.3.0",
+    "typescript": "2.3.2",
+    "uuid": "^3.0.1",
+    "walkdir": "0.0.11"
   },
   "devDependencies": {
     "@types/body-parser": "1.16.3",

@@ -3,7 +3,7 @@ import * as express from 'express';
 import * as flac from 'flac-bindings';
 import * as fs from 'fs';
 
-export class Player {
+export default class Player {
 
   public router: express.Router;
 
