@@ -56,7 +56,7 @@ export default class Library {
   }
 
   private createTrack(musicMetadata: any, fileMetadata: any) : LocalTrack {
-    const newTrack: LocalTrack = new LocalTrack(uuid(), fileMetadata.path, fileMetadata.base, musicMetadata.artist, musicMetadata.title, musicMetadata.album, musicMetadata.duration);
+    const newTrack: LocalTrack = new LocalTrack(uuid(), fileMetadata.path, fileMetadata.base, musicMetadata.artist, musicMetadata.title, musicMetadata.album, musicMetadata.duration, musicMetadata.track.no);
     this.tracks.push(newTrack);
     debug('new track added: ' + newTrack.toString());
     return newTrack;
@@ -108,8 +108,9 @@ class LocalTrack {
   album: string;
   duration: number;
   filename: string;
+  trackNumber: number;
 
-  constructor(uuid: string, uri: string, filename: string, artistNames: string[], title: string, album: string, duration: number) {
+  constructor(uuid: string, uri: string, filename: string, artistNames: string[], title: string, album: string, duration: number, trackNumber: number) {
     this.uuid = uuid;
     this.uri = uri;
     this.filename = filename;
@@ -117,6 +118,7 @@ class LocalTrack {
     this.title = title;
     this.album = album;
     this.duration = duration;
+    this.trackNumber = trackNumber;
   }
 
   public toString(): string {

@@ -36,7 +36,6 @@ class Application {
     this.express.use('/app', router);
     this.express.use('/api', this.player.router);
     this.express.use('/api', this.library.router);
-
   }
 
   private loadStatics() {
