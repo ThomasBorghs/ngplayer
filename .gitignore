@@ -1,16 +1,16 @@
 # compiled output
-/dist
+*/dist
 /tmp
 
 # dependencies
-/node_modules
+*/node_modules
 
 # IDEs and editors
 /.idea
 ngplayer.iml
 
-npm-debug.log
+*/npm-debug.log
 
 #System Files
-.DS_Store
-Thumbs.db
+*/.DS_Store
+*/Thumbs.db

@@ -4,6 +4,9 @@ import * as musicMetadata from 'musicmetadata';
 import * as fs from 'fs';
 import * as uuid from 'uuid';
 import * as parseFilepath from 'parse-filepath'
+import * as Debug from 'debug';
+
+const debug = Debug('library');
 
 export default class Library {
 
@@ -17,11 +20,12 @@ export default class Library {
   constructor() {
     this.loadLocalLibrary();
 
-    this.router = express.Router().get('/library/albums', (req, res) => {
+    this.router = express.Router();
+    this.router.get('/library/albums', (req, res) => {
       res.send(this.albums);
     });
 
-    this.router = express.Router().get('/library/tracks', (req, res) => {
+    this.router.get('/library/tracks', (req, res) => {
       res.send(this.tracks);
     });
   }
@@ -45,44 +49,65 @@ export default class Library {
   private processFlacFile(fileMetadata) {
     const readStream = fs.createReadStream(fileMetadata.path);
     musicMetadata(readStream, (err, musicMetadata) => {
-      const newTrack = this.createTrack(musicMetadata, fileMetadata);
-      this.addTrackToAlbum(newTrack);
+      let newTrack = this.createTrack(musicMetadata, fileMetadata);
+      this.addToAlbum(fileMetadata, newTrack.uuid);
       readStream.close();
     });
   }
 
-  private createTrack(musicMetadata: any, fileMetadata: any): LocalTrack {
-    const newTrack:LocalTrack = new LocalTrack(uuid(), fileMetadata.path, fileMetadata.base, musicMetadata.artist, musicMetadata.title, musicMetadata.album, musicMetadata.duration);
+  private createTrack(musicMetadata: any, fileMetadata: any) : LocalTrack {
+    const newTrack: LocalTrack = new LocalTrack(uuid(), fileMetadata.path, fileMetadata.base, musicMetadata.artist, musicMetadata.title, musicMetadata.album, musicMetadata.duration);
     this.tracks.push(newTrack);
+    debug('new track added: ' + newTrack.toString());
     return newTrack;
   }
 
-  private addTrackToAlbum(newTrack: LocalTrack) {
+  private addToAlbum(fileMetadata: any, newTrackUuid: string) {
+    const stringArray: string[] = fileMetadata.dir.split('/');
+    if (stringArray[stringArray.length - 2] === 'albums') {
+      let albumArtistAndTitle: string[] = stringArray[stringArray.length - 1].split(' - ');
+      this.addToExistingAlbumOrCreateOneAndAdd(albumArtistAndTitle[0], albumArtistAndTitle[1], newTrackUuid);
+    }
+  }
+
+  private addToExistingAlbumOrCreateOneAndAdd(artist: string, title: string, newTrackUuid: string) {
+    let album:LocalAlbum = this.albums.find((album) => album.artist === artist && album.title === title);
+    if (!album) {
+      album = new LocalAlbum(uuid(), artist, title);
+      this.albums.push(album);
+      debug('new album created: ' + artist + ' - ' + title);
+    }
+    album.addTrack(newTrackUuid);
   }
 }
 
 class LocalAlbum {
 
-  private uuid: string;
-  private name: string;
-  private artistNames: string[];
+  uuid: string;
+  artist: string;
+  title: string;
+  tracksUuids: string[] = [];
 
-  constructor(uuid: string, name: string, artistNames: string[]) {
+  constructor(uuid: string, artist: string, title: string) {
     this.uuid = uuid;
-    this.name = name;
-    this.artistNames = artistNames;
+    this.artist = artist;
+    this.title = title;
+  }
+
+  public addTrack(trackUuid): void {
+    this.tracksUuids.push(trackUuid);
   }
 }
 
 class LocalTrack {
 
-  private uuid: string;
-  private uri: string;
-  private artistNames: string[];
-  private title: string;
-  private album: string;
-  private duration: number;
-  private filename: string;
+  uuid: string;
+  uri: string;
+  artistNames: string[];
+  title: string;
+  album: string;
+  duration: number;
+  filename: string;
 
   constructor(uuid: string, uri: string, filename: string, artistNames: string[], title: string, album: string, duration: number) {
     this.uuid = uuid;
@@ -92,5 +117,9 @@ class LocalTrack {
     this.title = title;
     this.album = album;
     this.duration = duration;
+  }
+
+  public toString(): string {
+    return this.artistNames.reduce((accumulator, artist) => accumulator + artist + ' ', '') + '- ' + this.title;
   }
 }

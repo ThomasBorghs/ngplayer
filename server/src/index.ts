@@ -1,10 +1,9 @@
 import * as http from 'http';
-import * as debug from 'debug';
+import * as Debug from 'debug';
 
 import App from './server';
 
-debug('ts-express:App');
-
+const debug = Debug('ts-express:App');
 const port = 3000;
 App.set('port', port);
 
