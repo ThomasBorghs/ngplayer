@@ -2,8 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "outDir": "dist",
-    "lib": ["es2016"]
+    "outDir": "dist"
     // gives a lot of trouble when using node packages without types
 //    "noImplicitAny": true
   },
