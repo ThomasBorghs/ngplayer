@@ -1,8 +1,8 @@
 import {Component, OnInit} from "@angular/core";
-import {LibraryService} from "../../service/library.service";
 import {PlaybackQueueService} from "../../../playback/service/playback.queue.service";
 import {PlaybackService} from "../../../playback/service/playback.service";
-import {DetailedTrack} from "../../model/detailed.track";
+import {LibraryService} from "../../service/library.service";
+import {Track} from "../../model/model";
 
 @Component({
   selector: 'ngp-track',
@@ -10,7 +10,7 @@ import {DetailedTrack} from "../../model/detailed.track";
 })
 export class TrackOverviewComponent implements OnInit {
 
-  tracks: DetailedTrack[];
+  tracks: Track[];
 
   constructor(private libraryService: LibraryService,
               private playbackQueueService: PlaybackQueueService,
@@ -24,6 +24,8 @@ export class TrackOverviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.libraryService.getAllTracks().subscribe(trackList => this.tracks = trackList);
+    this.libraryService.getAllTracks()
+      .do(x => console.log(x))
+      .subscribe(trackList => this.tracks = trackList);
   }
 }

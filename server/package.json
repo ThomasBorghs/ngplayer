@@ -13,6 +13,7 @@
   "private": true,
   "dependencies": {
     "body-parser": "1.17.2",
+    "cors": "^2.8.3",
     "debug": "2.6.8",
     "express": "4.15.3",
     "flac-bindings": "1.2.1",

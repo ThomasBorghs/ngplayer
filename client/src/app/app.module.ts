@@ -3,7 +3,6 @@ import {NgModule} from "@angular/core";
 import {HttpModule} from "@angular/http";
 import {MaterialModule} from "@angular/material";
 import {AppComponent} from "./app.component";
-import {JsonRPCService} from "./services/jsonrpc/jsonrpc.service";
 import {AppRoutingModule} from "./app.route.module";
 import {AlbumModule} from "./library/album/album.module";
 import {ArtistModule} from "./library/artist/artist.module";
@@ -29,8 +28,7 @@ import {TrackModule} from "./library/track/track.module";
     AppComponent
   ],
   providers: [
-    LibraryService,
-    JsonRPCService
+    LibraryService
   ]
 })
 

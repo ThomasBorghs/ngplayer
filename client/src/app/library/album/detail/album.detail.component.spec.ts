@@ -2,7 +2,7 @@
 import {ComponentFixture, TestBed, async, fakeAsync, tick} from "@angular/core/testing";
 import {AlbumDetailComponent} from "./album.detail.component";
 import {MaterialModule} from "@angular/material";
-import {LibraryService} from "../../service/library.service";
+import {LibraryService} from "../../service/mopidy.library.service";
 import {PlaybackQueueService} from "../../../playback/service/playback.queue.service";
 import {PlaybackService} from "../../../playback/service/playback.service";
 import {ActivatedRoute} from "@angular/router";

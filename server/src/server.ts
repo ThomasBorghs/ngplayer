@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
 
 import Library from "./library/library";
 import Player from "./player/player";
@@ -23,6 +24,7 @@ class Application {
 
   // Configure Express middleware.
   private middleware(): void {
+    this.express.use(cors());
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({extended: false}));
   }
@@ -39,7 +41,7 @@ class Application {
   }
 
   private loadStatics() {
-    this.express.use(express.static(path.join(__dirname, 'dist')));
+    this.express.use(express.static(path.join(__dirname, '../../client/dist')));
   }
 }
 

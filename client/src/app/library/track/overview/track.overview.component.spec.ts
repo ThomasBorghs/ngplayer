@@ -3,7 +3,7 @@ import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/t
 import { By } from '@angular/platform-browser';
 
 import {MaterialModule} from "@angular/material";
-import {LibraryService} from "../../service/library.service";
+import {LibraryService} from "../../service/mopidy.library.service";
 import {Observable} from "rxjs";
 import {DetailedTrack} from "../../model/detailed.track";
 import {SimpleArtist} from "../../model/simple.artist";

@@ -17,10 +17,6 @@ export class PlaybackComponent implements OnInit {
     this.playbackService.pause();
   }
 
-  stopClicked() {
-    this.playbackService.stop();
-  }
-
   ngOnInit(): void {
   }
 }

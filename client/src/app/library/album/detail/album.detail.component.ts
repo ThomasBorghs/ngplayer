@@ -4,7 +4,7 @@ import "rxjs/add/operator/switchMap";
 import {PlaybackQueueService} from "../../../playback/service/playback.queue.service";
 import {PlaybackService} from "../../../playback/service/playback.service";
 import {LibraryService} from "../../service/library.service";
-import {SimpleTrack} from "../../model/simple.track";
+import {Track} from "../../model/model";
 
 @Component({
   selector: 'ngp-album',
@@ -12,7 +12,7 @@ import {SimpleTrack} from "../../model/simple.track";
 })
 export class AlbumDetailComponent implements OnInit {
 
-  albumTracks: SimpleTrack[];
+  albumTracks: Track[];
 
   constructor(private libraryService: LibraryService,
               private playbackQueueService: PlaybackQueueService,
@@ -28,7 +28,7 @@ export class AlbumDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams
-      .switchMap((queryParams: Params) => this.libraryService.getSortedAlbumTracks(queryParams['uri']))
+      .switchMap((queryParams: Params) => this.libraryService.getAlbumTracks(queryParams['uri']))
       .do(x => console.log(x))
       .subscribe((albumTracks) => this.albumTracks = albumTracks);
   }

@@ -3,8 +3,6 @@ import {AlbumOverviewComponent} from "./album.overview.component";
 import {MaterialModule} from "@angular/material";
 import {LibraryService} from "../../service/library.service";
 import {Observable} from "rxjs";
-import {SimpleAlbum} from "../../model/simple.album";
-import {SimpleArtist} from "../../model/simple.artist";
 import {By} from "@angular/platform-browser";
 import {RouterTestingModule} from "@angular/router/testing";
 import {CommonModule} from "@angular/common";
