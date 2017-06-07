@@ -27,7 +27,7 @@ export default class Library {
 
     this.router.get('/library/albums/:albumUuid/tracks', (req, res) => {
       const trackUuids: string[] = this.albums.find((album) => album.uuid === req.params.albumUuid).tracksUuids;
-      res.send(this.tracks.filter((track) => trackUuids.includes(track.uuid)));
+      res.send(this.tracks.filter((track) => trackUuids.indexOf(track.uuid) > -1).sort((track1, track2) => track1.trackNumber - track2.trackNumber));
     });
 
     this.router.get('/library/tracks', (req, res) => {
@@ -61,7 +61,7 @@ export default class Library {
   }
 
   private createTrack(musicMetadata: any, fileMetadata: any) : LocalTrack {
-    const newTrack: LocalTrack = new LocalTrack(uuid(), fileMetadata.path, fileMetadata.base, musicMetadata.artist, musicMetadata.title, musicMetadata.album, musicMetadata.duration, fileMetadata.trackNumber);
+    const newTrack: LocalTrack = new LocalTrack(uuid(), fileMetadata.path, fileMetadata.base, musicMetadata.artist, musicMetadata.title, musicMetadata.album, musicMetadata.duration, musicMetadata.track.no);
     this.tracks.push(newTrack);
     debug('new track added: ' + newTrack.toString());
     return newTrack;

@@ -1,5 +1,5 @@
 <md-list>
   <md-list-item (click)="trackClicked(track.uri);" *ngFor="let track of albumTracks">
-    <h3 md-line>{{track.track_number}}. {{track.name}} {{track.length}}</h3>
+    <h3 md-line>{{track.trackNumber}}. {{track.artistNames[0]}} - {{track.title}}</h3>
   </md-list-item>
 </md-list>
