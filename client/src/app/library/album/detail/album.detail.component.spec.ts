@@ -2,24 +2,23 @@
 import {ComponentFixture, TestBed, async, fakeAsync, tick} from "@angular/core/testing";
 import {AlbumDetailComponent} from "./album.detail.component";
 import {MaterialModule} from "@angular/material";
-import {LibraryService} from "../../service/mopidy.library.service";
 import {PlaybackQueueService} from "../../../playback/service/playback.queue.service";
 import {PlaybackService} from "../../../playback/service/playback.service";
 import {ActivatedRoute} from "@angular/router";
-import {SimpleTrack} from "../../model/simple.track";
-import {SimpleArtist} from "../../model/simple.artist";
 import {By} from "@angular/platform-browser";
 import {ActivatedRouteStub} from "../../../../testing/activated.route.stub";
 import {Observable} from "rxjs";
+import {LibraryService} from "../../service/library.service";
+import {createTrack, Track} from "../../model/model";
 
 describe('AlbumDetailComponent', () => {
 
-  const ARTIST_1 = new SimpleArtist("artistName 1");
-  const ARTIST_2 = new SimpleArtist("artistName 2");
+  const ARTIST_NAME_1 = "artistName 1";
+  const ARTIST_NAME_2 = "artistName 2";
 
-  const TRACK_1_URI = "uri 1";
-  const TRACK_1 = new SimpleTrack([ARTIST_1], "track name 1", 1, 10, TRACK_1_URI);
-  const TRACK_2 = new SimpleTrack([ARTIST_2], "track name 2", 2, 20, "uri 2");
+  const TRACK_1_URI = "track 1 uri";
+  const TRACK_1: Track = createTrack("track 1 uuid", TRACK_1_URI, [ARTIST_NAME_1], "track 1 title", "track 1 album", 10, "track 1 filename", 1);
+  const TRACK_2: Track = createTrack("track 2 uuid", "track 2 uri", [ARTIST_NAME_2], "track 2 title", "track 2 album", 20, "track 2 filename", 2);
 
   const EXPECTED_TRACK_1_INFO = '1. track name 1 10';
   const EXPECTED_TRACK_2_INFO = '2. track name 2 20';
@@ -27,6 +26,7 @@ describe('AlbumDetailComponent', () => {
   const ALBUM_DIRECTORY_URI = 'album directory uri';
 
   let component: AlbumDetailComponent;
+
   let fixture: ComponentFixture<AlbumDetailComponent>;
 
   beforeEach(async(() => {

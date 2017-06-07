@@ -7,6 +7,10 @@ export interface Album {
 
 }
 
+export function createAlbum(uuid, artist, title, trackUuids): Album {
+  return {uuid: uuid, artist: artist, title: title, tracksUuids: trackUuids};
+}
+
 export interface Track {
 
   uuid: string;
@@ -18,4 +22,17 @@ export interface Track {
   filename: string;
   trackNumber: number;
 
+}
+
+export function createTrack(uuid, uri, artistNames, title, album, duration, filename, trackNumber): Track {
+  return {
+    uuid: uuid,
+    uri: uri,
+    artistNames: artistNames,
+    title: title,
+    album: album,
+    duration: duration,
+    filename: filename,
+    trackNumber: trackNumber
+  }
 }
