@@ -26,7 +26,7 @@ export default class Library {
     });
 
     this.router.get('/library/albums/:albumUuid/tracks', (req, res) => {
-      const trackUuids: string[] = this.albums.find((album) => album.uuid === req.params.albumUuid).tracksUuids;
+      const trackUuids: string[] = this.albums.find((album) => album.uuid === req.params.albumUuid).trackUuids;
       res.send(this.tracks.filter((track) => trackUuids.indexOf(track.uuid) > -1).sort((track1, track2) => track1.trackNumber - track2.trackNumber));
     });
 
@@ -91,7 +91,7 @@ class LocalAlbum {
   uuid: string;
   artist: string;
   title: string;
-  tracksUuids: string[] = [];
+  trackUuids: string[] = [];
 
   constructor(uuid: string, artist: string, title: string) {
     this.uuid = uuid;
@@ -100,7 +100,7 @@ class LocalAlbum {
   }
 
   public addTrack(trackUuid): void {
-    this.tracksUuids.push(trackUuid);
+    this.trackUuids.push(trackUuid);
   }
 }
 

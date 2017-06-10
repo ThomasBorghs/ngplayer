@@ -6,14 +6,15 @@ import {MaterialModule} from "@angular/material";
 import {RouterTestingModule} from "@angular/router/testing";
 import {PlaybackModule} from "./playback/playback.module";
 import {By} from "@angular/platform-browser";
+import {Http} from "@angular/http";
 
 describe('App: Ngplayer', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
-      imports: [RouterTestingModule, MaterialModule, PlaybackModule]
-      // providers: [{provide: JsonRPCService, useValue: jasmine.createSpyObj('JsonRPCService', ['performCall'])}]
+      imports: [RouterTestingModule, MaterialModule, PlaybackModule],
+      providers: [{provide: Http, useValue: jasmine.createSpyObj('Http', ['get'])}]
     }).compileComponents();
   }));
 

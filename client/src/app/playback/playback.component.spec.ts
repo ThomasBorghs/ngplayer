@@ -13,7 +13,7 @@ describe('PlaybackComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PlaybackComponent],
-      providers: [{provide: PlaybackService, useValue: jasmine.createSpyObj('PlaybackService', ['play', 'pause', 'stop'])}]
+      providers: [{provide: PlaybackService, useValue: jasmine.createSpyObj('PlaybackService', ['play', 'pause'])}]
     })
       .compileComponents();
   }));
@@ -41,14 +41,4 @@ describe('PlaybackComponent', () => {
       expect(TestBed.get(PlaybackService).pause).toHaveBeenCalled();
     });
   });
-
-  describe('stopClicked', () => {
-    it('stops playback when stop was clicked', () => {
-      let button = fixture.debugElement.query(By.css('#stop'));
-      button.nativeElement.click();
-
-      expect(TestBed.get(PlaybackService).stop).toHaveBeenCalled();
-    });
-  });
-
 });

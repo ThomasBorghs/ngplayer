@@ -3,22 +3,27 @@ import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/t
 import { By } from '@angular/platform-browser';
 
 import {MaterialModule} from "@angular/material";
-import {LibraryService} from "../../service/mopidy.library.service";
 import {Observable} from "rxjs";
-import {DetailedTrack} from "../../model/detailed.track";
-import {SimpleArtist} from "../../model/simple.artist";
 import {PlaybackQueueService} from "../../../playback/service/playback.queue.service";
 import {PlaybackService} from "../../../playback/service/playback.service";
 import {TrackOverviewComponent} from "./track.overview.component";
+import {LibraryService} from "../../service/library.service";
+import {Track} from "../../model/model";
+import {TrackBuilder} from "../../../../testing/model_test_util";
 
 describe('TrackOverviewComponent', () => {
 
-  const SIMPLE_ARTIST_1 = new SimpleArtist("artist 1");
-  const SIMPLE_ARTIST_2 = new SimpleArtist("artist 2");
-
   const TRACK_1_URI = "track 1 uri";
-  const TRACK_1 = new DetailedTrack([SIMPLE_ARTIST_1], "track name 1", 1, 10, TRACK_1_URI, "album name 1");
-  const TRACK_2 = new DetailedTrack([SIMPLE_ARTIST_2], "track name 2", 2, 20, "track 2 uri", "album name 2");
+  const TRACK_1_ARTIST = "artistName 1";
+  const TRACK_1_TITLE = "track 1 title";
+  const TRACK_1_ALBUM = "track 1 album";
+
+  const TRACK_2_ARTIST = "artistName 2";
+  const TRACK_2_TITLE = "track 2 title";
+  const TRACK_2_ALBUM = "track 2 album";
+
+  const TRACK_1: Track = new TrackBuilder().withUri(TRACK_1_URI).withArtistNames([TRACK_1_ARTIST]).withTitle(TRACK_1_TITLE).withAlbum(TRACK_1_ALBUM).build();
+  const TRACK_2: Track = new TrackBuilder().withArtistNames([TRACK_2_ARTIST]).withTitle(TRACK_2_TITLE).withAlbum(TRACK_2_ALBUM).build();
 
   let component: TrackOverviewComponent;
   let fixture: ComponentFixture<TrackOverviewComponent>;
@@ -45,8 +50,8 @@ describe('TrackOverviewComponent', () => {
 
       let tracks = fixture.debugElement.queryAll(By.css('span'));
       expect(tracks.length).toBe(2);
-      expect(tracks[0].nativeElement.textContent).toEqual("track name 1 - artist 1 - album name 1 - 10");
-      expect(tracks[1].nativeElement.textContent).toEqual("track name 2 - artist 2 - album name 2 - 20");
+      expect(tracks[0].nativeElement.textContent).toEqual(TRACK_1_TITLE + ' - ' + TRACK_1_ARTIST + ' - ' + TRACK_1_ALBUM);
+      expect(tracks[1].nativeElement.textContent).toEqual(TRACK_2_TITLE + ' - ' + TRACK_2_ARTIST + ' - ' + TRACK_2_ALBUM);
     }));
   });
 

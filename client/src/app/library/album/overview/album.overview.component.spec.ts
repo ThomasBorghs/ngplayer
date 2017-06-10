@@ -6,14 +6,18 @@ import {Observable} from "rxjs";
 import {By} from "@angular/platform-browser";
 import {RouterTestingModule} from "@angular/router/testing";
 import {CommonModule} from "@angular/common";
+import {AlbumBuilder} from "../../../../testing/model_test_util";
 
 describe('AlbumOverviewComponent', () => {
 
-  const ARTIST_1 = new SimpleArtist("artist 1");
-  const ARTIST_2 = new SimpleArtist("artist 2");
+  const ALBUM_1_TITLE = "album 1 title";
+  const ALBUM_1_ARTIST = "album 1 artist";
 
-  const ALBUM_1 = new SimpleAlbum("uri album 1", ARTIST_1, "album 1");
-  const ALBUM_2 = new SimpleAlbum("uri album 2", ARTIST_2, "album 2");
+  const ALBUM_2_TITLE = "album 2 title";
+  const ALBUM_2_ARTIST = "album 2 artist";
+
+  const ALBUM_1 = new AlbumBuilder().withTitle(ALBUM_1_TITLE).withArtist(ALBUM_1_ARTIST).build();
+  const ALBUM_2 = new AlbumBuilder().withTitle(ALBUM_2_TITLE).withArtist(ALBUM_2_ARTIST).build();
 
   let component: AlbumOverviewComponent;
   let fixture: ComponentFixture<AlbumOverviewComponent>;
@@ -39,16 +43,14 @@ describe('AlbumOverviewComponent', () => {
       tick();
       fixture.detectChanges();
 
-      let albumElements = fixture.debugElement.queryAll(By.css('a'));
+      let albumElements = fixture.debugElement.queryAll(By.css('h3'));
       expect(albumElements.length).toEqual(2);
-      assertAlbumEntry(albumElements[0], "album 1 - artist 1");
-      assertAlbumEntry(albumElements[1], "album 2 - artist 2");
-      expect(TestBed.get(LibraryService).getAlbums).toHaveBeenCalled();
-    }));
+      expect(albumElements[0].nativeElement.innerText).toEqual(ALBUM_1_TITLE + " - " + ALBUM_1_ARTIST);
+      expect(albumElements[1].nativeElement.innerText).toEqual(ALBUM_2_TITLE + " - " + ALBUM_2_ARTIST);
 
-    function assertAlbumEntry(albumEntry, expectedTextContent) {
-      expect(albumEntry.attributes['routerLink']).toEqual("/albumDetail/");
-      expect(albumEntry.nativeElement.children[0].children[0].children[0].innerText).toEqual(expectedTextContent);
-    }
+      let albumLinks = fixture.debugElement.queryAll(By.css('a'));
+      expect(albumLinks[0].attributes['routerLink']).toEqual("/albumDetail/");
+      expect(albumLinks[1].attributes['routerLink']).toEqual("/albumDetail/");
+    }));
   });
 });
