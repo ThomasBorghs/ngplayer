@@ -1,43 +1,32 @@
 /* tslint:disable:no-unused-variable */
 
-import {TestBed, async, inject} from '@angular/core/testing';
-import {PAUSE_METHOD, PLAY_METHOD, PlaybackService, STOP_METHOD} from './playback.service';
-import {JsonRPCService} from "../../services/jsonrpc/jsonrpc.service";
 import {Observable} from "rxjs";
+import {PlaybackService} from "./playback.service";
 
 describe('PlaybackService', () => {
 
-  let jsonRPCServiceStub;
+  let http;
   let playbackService: PlaybackService;
 
   beforeEach(() => {
-    jsonRPCServiceStub = jasmine.createSpyObj('JsonRPCService', ['performCall']);
-    jsonRPCServiceStub.performCall.and.returnValue(Observable.empty());
-    playbackService = new PlaybackService(jsonRPCServiceStub);
+    http = jasmine.createSpyObj('Http', ['put']);
+    http.put.and.returnValue(Observable.empty());
+    playbackService = new PlaybackService(http);
   });
 
   describe('play', () => {
-    it('calls the JsonRPCService to start playback', () => {
+    it('performs a REST call to start playback', () => {
       playbackService.play();
 
-      expect(jsonRPCServiceStub.performCall).toHaveBeenCalledWith(PLAY_METHOD, {});
+      expect(http.put).toHaveBeenCalledWith(PlaybackService.PLAY_URL(), {});
     });
   });
 
   describe('pause', () => {
-    it('calls the JsonRPCService to pause playback', () => {
+    it('performs a REST call to pause playback', () => {
       playbackService.pause();
 
-      expect(jsonRPCServiceStub.performCall).toHaveBeenCalledWith(PAUSE_METHOD, {});
+      expect(http.put).toHaveBeenCalledWith(PlaybackService.PAUSE_URL(), {});
     });
   });
-
-  describe('stop', () => {
-    it('calls the JsonRPCService to stop playback', () => {
-      playbackService.stop();
-
-      expect(jsonRPCServiceStub.performCall).toHaveBeenCalledWith(STOP_METHOD, {});
-    });
-  });
-
 });
